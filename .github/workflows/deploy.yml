@@ -21,9 +21,10 @@ jobs:
         run: mvn --batch-mode --update-snapshots verify
   deploy:
     name: render deploy
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: bounceapp/render-actions@0.6.0
+      - uses: bounceapp/render-action@0.6.0
         with:
           render-token: ${{secrets.RENDER_TOKEN}}
           service-id: ${{secrets.SERVICE_ID}}
