@@ -26,6 +26,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Trigger Render Deploy
+        run: |
+          curl --request POST \
+          --url https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}/deploys \
+          --header 'accept: application/json' \
+          --header 'authorization: Bearer ${{ secrets.RENDER_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{ "clearCache": "do_not_clear" }'
       - name: Wait Render Deploy
         uses: bounceapp/render-action@0.6.0
         with:
