@@ -1,0 +1,32 @@
+name: Laer CI/CD
+on: [push]
+jobs:
+  build:
+    name: build and test application
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+          cache: 'maven'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: wait maven build & test
+        run: mvn --batch-mode --update-snapshots verify
+  deploy:
+    name: render deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bounceapp/render-actions@0.6.0
+        with:
+          render-token: ${{secrets.RENDER_TOKEN}}
+          service-id: ${{secrets.SERVICE_ID}}
+          retries: 3
+          wait: 8000
+          sleep: 50000 
