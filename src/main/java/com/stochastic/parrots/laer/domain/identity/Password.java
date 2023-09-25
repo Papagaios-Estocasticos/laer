@@ -31,5 +31,9 @@ public class Password {
         return this.password;
     }
 
+    public interface Encoder {
+        String encode(Password password);
+    }
+
     public static class Invalid extends RuntimeException { }
 }
