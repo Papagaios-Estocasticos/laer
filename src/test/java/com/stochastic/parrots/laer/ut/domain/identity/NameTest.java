@@ -12,8 +12,8 @@ public class NameTest {
 
     @Test
     public void createName() {
-        var password = Name.of("Arnold");
-        assertEquals("Arnold", password.get());
+        var name = Name.of("Arnold");
+        assertEquals("Arnold", name.get());
     }
 
     @Test
