@@ -18,7 +18,7 @@ public class Information extends ValueObject {
     protected Information(Builder builder) {
         super(CONTEXT);
         this.name = builder.name;
-        this.issuer = builder.issuer.get();
+        this.issuer = builder.issuer;
         this.price = Price.of(builder.price);
         this.maturity = builder.maturity;
         this.isIncomeTaxExempt = builder.isIncomeTaxExempt;
@@ -38,7 +38,7 @@ public class Information extends ValueObject {
 
     public static class Builder {
         private String name;
-        private Supplier<Issuer> issuer;
+        private Issuer issuer;
         private Double price;
         private LocalDate maturity;
         private boolean isIncomeTaxExempt = false;
@@ -49,12 +49,12 @@ public class Information extends ValueObject {
         }
 
         public Builder issuer(Supplier<Issuer> issuer) {
-            this.issuer = issuer;
+            this.issuer = issuer.get();
             return this;
         }
 
         public Builder issuer(String issuer) {
-            this.issuer = () -> Issuer.bank(issuer);
+            this.issuer = Issuer.bank(issuer);
             return this;
         }
 

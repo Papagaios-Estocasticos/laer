@@ -64,8 +64,7 @@ public class InformationTest {
 
     @Test
     public void createInformationWithErrorWhenPassInvalidIssuer() {
-        var information = someInformationWithoutIssuer()
-                .issuer("test").build();
+        var information = someInformation().issuer("test").build();
 
         assertEquals("bond information", information.errors().context());
         assertTrue(information.hasErrors());
