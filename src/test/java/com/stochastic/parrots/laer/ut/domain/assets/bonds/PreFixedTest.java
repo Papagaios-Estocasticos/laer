@@ -141,7 +141,7 @@ public class PreFixedTest {
                 .containsAll(List.of(
                         "price must be greater 0.0",
                         "issuer name must contain 5 to 10 letters",
-                        "interest rate must be between 0.0 and 1.0"));
+                        "interest rate must be greater 0.0"));
     }
 
     private static final LocalDate NOW = LocalDate.now();

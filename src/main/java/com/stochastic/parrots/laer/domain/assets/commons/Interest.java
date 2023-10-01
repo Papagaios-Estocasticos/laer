@@ -15,8 +15,8 @@ public class Interest extends ValueObject {
     }
 
     private void validate() {
-        if(rate < 0.0 || rate > 1.0) {
-            errors.because("interest rate must be between 0.0 and 1.0");
+        if(rate < 0.0) {
+            errors.because("interest rate must be greater 0.0");
         }
     }
 

@@ -36,29 +36,7 @@ public class InterestTest {
         assertTrue(interest.hasErrors());
         assertThat(interest.errors().reasons())
                 .hasSize(1)
-                .contains("interest rate must be between 0.0 and 1.0");
-    }
-
-    @Test
-    public void createInterestWithErrorWhenPassValueGreaterOne() {
-        var interest = Interest.rate(1.5);
-
-        assertEquals("interest", interest.errors().context());
-        assertTrue(interest.hasErrors());
-        assertThat(interest.errors().reasons())
-                .hasSize(1)
-                .contains("interest rate must be between 0.0 and 1.0");
-    }
-
-    @Test
-    public void createInterestWithErrorWhenPassValueGreaterOneHundred() {
-        var interest = Interest.percentage(105);
-
-        assertEquals("interest", interest.errors().context());
-        assertTrue(interest.hasErrors());
-        assertThat(interest.errors().reasons())
-                .hasSize(1)
-                .contains("interest rate must be between 0.0 and 1.0");
+                .contains("interest rate must be greater 0.0");
     }
 
     @Test
