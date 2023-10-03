@@ -9,15 +9,6 @@ public class InformationFixture {
         // fixture class
     }
 
-    public static Information someInformation() {
-        return new Information.Builder()
-                .name("some bond")
-                .issuer("some bank")
-                .price(1.0)
-                .maturity(LocalDate.now())
-                .build();
-    }
-
     public static Information someLCAInformationWith(LocalDate maturity) {
         return new Information.Builder()
                 .name("LCA")
