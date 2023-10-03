@@ -22,22 +22,15 @@ public class Issuer extends ValueObject {
         }
     }
 
-    public static Issuer bank(String name) {
+    public static Issuer of(String name) {
         return new Issuer(name);
     }
 
-    public static Issuer government() {
-        return new Issuer("Governo Federal");
-    }
 
     public String get() {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 
     @Override
     public int hashCode() {

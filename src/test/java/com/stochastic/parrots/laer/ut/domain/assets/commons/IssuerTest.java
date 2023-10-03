@@ -11,7 +11,7 @@ public class IssuerTest {
 
     @Test
     public void createIssuer() {
-        var issuer = Issuer.bank("bank boston");
+        var issuer = Issuer.of("bank boston");
 
         assertEquals("issuer", issuer.errors().context());
         assertTrue(issuer.errors().reasons().isEmpty());
@@ -19,19 +19,10 @@ public class IssuerTest {
         assertEquals("bank boston", issuer.get());
     }
 
-    @Test
-    public void createGovernmentIssuer() {
-        var issuer = Issuer.government();
-
-        assertEquals("issuer", issuer.errors().context());
-        assertTrue(issuer.errors().reasons().isEmpty());
-        assertFalse(issuer.hasErrors());
-        assertEquals("Governo Federal", issuer.get());
-    }
 
     @Test
     public void createIssuerWithErrorWhenPassEmptyName() {
-        var issuer = Issuer.bank("");
+        var issuer = Issuer.of("");
 
         assertEquals("issuer", issuer.errors().context());
         assertFalse(issuer.errors().reasons().isEmpty());
@@ -43,7 +34,7 @@ public class IssuerTest {
 
     @Test
     public void createIssuerWithErrorWhenPassBlankName() {
-        var issuer = Issuer.bank("   ");
+        var issuer = Issuer.of("   ");
 
         assertEquals("issuer", issuer.errors().context());
         assertFalse(issuer.errors().reasons().isEmpty());
@@ -55,7 +46,7 @@ public class IssuerTest {
 
     @Test
     public void createIssuerWithErrorWhenPassInvalidName() {
-        var issuer = Issuer.bank("test");
+        var issuer = Issuer.of("test");
 
         assertEquals("issuer", issuer.errors().context());
         assertFalse(issuer.errors().reasons().isEmpty());
@@ -67,18 +58,18 @@ public class IssuerTest {
 
     @Test
     public void hashCodes() {
-        var bank = Issuer.bank("bank boston").hashCode();
-        var government = Issuer.government().hashCode();
+        var bank = Issuer.of("bank boston").hashCode();
+        var other = Issuer.of("bank u.s.a").hashCode();
 
-        assertNotEquals(bank, government);
+        assertNotEquals(bank, other);
     }
 
     @Test
     public void equals() {
-        var bank = Issuer.bank("bank boston");
-        var government = Issuer.government();
+        var bank = Issuer.of("bank boston");
+        var other = Issuer.of("bank u.s.a");
 
         assertEquals(bank, bank);
-        assertNotEquals(bank, government);
+        assertNotEquals(bank, other);
     }
 }
