@@ -1,7 +1,6 @@
 package com.stochastic.parrots.laer.fixture.domain.assets.commons;
 
 import com.stochastic.parrots.laer.domain.assets.bonds.Information;
-import com.stochastic.parrots.laer.domain.assets.commons.Issuer;
 
 import java.time.LocalDate;
 
@@ -10,29 +9,40 @@ public class InformationFixture {
         // fixture class
     }
 
-    public static Information.Builder someInformation() {
+    public static Information someInformation() {
         return new Information.Builder()
                 .name("some bond")
-                .issuer(() -> Issuer.bank("some bank"))
+                .issuer("some bank")
                 .price(1.0)
                 .maturity(LocalDate.now())
-                .incomeTaxExemption();
+                .build();
     }
 
-    public static Information.Builder someInformationWithIncomeTaxException() {
-        return someInformation()
-                .incomeTaxExemption();
+    public static Information someLCAInformationWith(LocalDate maturity) {
+        return new Information.Builder()
+                .name("LCA")
+                .issuer("some bank")
+                .price(1.0)
+                .maturity(maturity)
+                .build();
     }
 
-    public static Information.Builder someInformationWithoutIncomeTaxException() {
-        return someInformation()
-                .notIncomeTaxExemption();
+    public static Information someCDBInformationWith(LocalDate maturity) {
+        return new Information.Builder()
+                .name("CDB")
+                .issuer("some bank")
+                .price(1.0)
+                .maturity(maturity)
+                .build();
     }
 
-    public static Information.Builder someInvalidInformation() {
-        return someInformation()
+
+    public static Information someInformationWithAllFieldsInvalid() {
+        return new Information.Builder()
                 .price(-1.0)
-                .issuer(() -> Issuer.bank("test"))
-                .name("t");
+                .issuer("test")
+                .name("t")
+                .maturity(LocalDate.now())
+                .build();
     }
 }

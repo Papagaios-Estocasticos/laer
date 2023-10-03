@@ -4,7 +4,6 @@ import com.stochastic.parrots.laer.domain.assets.commons.*;
 import com.stochastic.parrots.laer.domain.shared.ValueObject;
 
 import java.time.LocalDate;
-import java.util.function.Supplier;
 
 public class Information extends ValueObject {
     private static final String CONTEXT = "bond information";
@@ -13,7 +12,6 @@ public class Information extends ValueObject {
     public final Issuer issuer;
     public final Price price;
     public final LocalDate maturity;
-    public final boolean isIncomeTaxExempt;
 
     protected Information(Builder builder) {
         super(CONTEXT);
@@ -21,7 +19,6 @@ public class Information extends ValueObject {
         this.issuer = builder.issuer;
         this.price = Price.of(builder.price);
         this.maturity = builder.maturity;
-        this.isIncomeTaxExempt = builder.isIncomeTaxExempt;
         validate();
     }
 
@@ -41,20 +38,14 @@ public class Information extends ValueObject {
         private Issuer issuer;
         private Double price;
         private LocalDate maturity;
-        private boolean isIncomeTaxExempt = false;
 
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder issuer(Supplier<Issuer> issuer) {
-            this.issuer = issuer.get();
-            return this;
-        }
-
         public Builder issuer(String issuer) {
-            this.issuer = Issuer.bank(issuer);
+            this.issuer = Issuer.of(issuer);
             return this;
         }
 
@@ -65,16 +56,6 @@ public class Information extends ValueObject {
 
         public Builder maturity(LocalDate maturity) {
             this.maturity = maturity;
-            return this;
-        }
-
-        public Builder incomeTaxExemption() {
-            this.isIncomeTaxExempt = true;
-            return this;
-        }
-
-        public Builder notIncomeTaxExemption() {
-            this.isIncomeTaxExempt = false;
             return this;
         }
 

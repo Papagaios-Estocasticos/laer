@@ -1,6 +1,6 @@
 package com.stochastic.parrots.laer.ut.domain.assets.bonds;
 
-import com.stochastic.parrots.laer.domain.assets.commons.Issuer;
+import com.stochastic.parrots.laer.domain.assets.bonds.Information;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InformationTest {
 
     @Test
-    public void createInformationWithIncomeTaxException() {
+    public void createInformation() {
         var now = LocalDate.now();
-        var information = someInformationWithIncomeTaxException()
+        var information = new Information.Builder()
                 .name("some bond")
-                .issuer(() -> Issuer.bank("some bank"))
+                .issuer("some bank")
                 .maturity(now)
                 .price(100.00).build();
 
@@ -28,31 +28,17 @@ public class InformationTest {
         assertEquals("some bank", information.issuer.get());
         assertEquals(100.00, information.price.get());
         assertEquals(now, information.maturity);
-        assertTrue(information.isIncomeTaxExempt);
         assertFalse(information.hasErrors());
     }
 
-    @Test
-    public void createInformationWithoutIncomeTaxException() {
-        var now = LocalDate.now();
-        var information = someInformationWithoutIncomeTaxException()
-                .name("some bond")
-                .issuer(() -> Issuer.bank("some bank"))
-                .maturity(now)
-                .price(100.00).build();
-
-
-        assertEquals("some bond", information.name);
-        assertEquals("some bank", information.issuer.get());
-        assertEquals(100.00, information.price.get());
-        assertEquals(now, information.maturity);
-        assertFalse(information.isIncomeTaxExempt);
-        assertFalse(information.hasErrors());
-    }
 
     @Test
     public void createInformationWithErrorWhenPassEmptyName() {
-        var information = someInformation().name("").build();
+        var information = new Information.Builder()
+                .name("")
+                .issuer("some issuer")
+                .price(2.0)
+                .build();
 
         assertEquals("bond information", information.errors().context());
         assertTrue(information.hasErrors());
@@ -64,7 +50,11 @@ public class InformationTest {
 
     @Test
     public void createInformationWithErrorWhenPassInvalidIssuer() {
-        var information = someInformation().issuer("test").build();
+        var information = new Information.Builder()
+                .name("some name")
+                .issuer("test")
+                .price(2.0)
+                .build();
 
         assertEquals("bond information", information.errors().context());
         assertTrue(information.hasErrors());
@@ -75,8 +65,11 @@ public class InformationTest {
 
     @Test
     public void createInformationWithErrorWhenPassInvalidPrice() {
-        var information = someInformation()
-                .price(-1.0).build();
+        var information = new Information.Builder()
+                .name("some name")
+                .issuer("some issuer")
+                .price(-1.0)
+                .build();
 
         assertEquals("bond information", information.errors().context());
         assertTrue(information.hasErrors());
@@ -87,7 +80,7 @@ public class InformationTest {
 
     @Test
     public void createInformationWithErrorWhenPassInvalidPriceIssuerAndName() {
-        var information = someInvalidInformation().build();
+        var information = someInformationWithAllFieldsInvalid();
 
         assertEquals("bond information", information.errors().context());
         assertTrue(information.hasErrors());
