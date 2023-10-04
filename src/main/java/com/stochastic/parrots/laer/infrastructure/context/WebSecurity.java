@@ -1,4 +1,4 @@
-package com.stochastic.parrots.laer.infrasturcture.context;
+package com.stochastic.parrots.laer.infrastructure.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
