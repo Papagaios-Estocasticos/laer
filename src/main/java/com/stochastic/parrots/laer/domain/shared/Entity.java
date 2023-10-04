@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public abstract class Entity {
-    protected final long id;
+    protected final Long id;
     protected final Errors errors;
 
     protected Entity(Long id, String context) {
