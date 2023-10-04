@@ -35,7 +35,7 @@ public abstract class Entity {
     public boolean equals(Object other) {
         return other != null &&
                 getClass().equals(other.getClass()) &&
-                id == (((Entity) other).id);
+                id.equals(((Entity) other).id);
     }
 
     public static class InvalidEntity extends RuntimeException {
